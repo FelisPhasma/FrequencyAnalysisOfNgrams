@@ -44,7 +44,10 @@ par(new=T)
 plot(x, log(v), type="p", xlab="", ylab="", axes=F, pch=".", col="red")
 
 
-plot(x, standarderror / v, type="p", main="Accuracy", xlab="Word", ylab="SD(freq) / freq", pch=".")
+plot(x, standarderror / v, type="p", main="Relative Standard Deviation", xlab="Word", ylab="SD(freq) / freq", pch=".")
+plot(x, sqrt((v * (1 - v)) / total) / v, type="p", main="Relative Standard Deviation", ylab="SD(frequency) / frequency", xlab="Word", pch=".")
+
+
 plot(x, standarderror, type="p", main="Recent Standard Deviation in Literature Word frequency", xlab="Word", ylab="SD(freq)", pch=".")
 plot(x, log(standarderror), type="p", main="log Recent Standard Deviation in Literature Word frequency", xlab="Word", ylab="Log(SD(freq))", pch=".")
 par(new=T)
@@ -84,7 +87,7 @@ plot(x, log(sqrt((v * (1 - v)) / total)), type="p", main="Log(Twitter Word frequ
 par(new=T)
 plot(x, log(v), pch=".", axes=F, xlab="", ylab="", col="blue")
 
-plot(x, sqrt((v * (1 - v)) / total) / v, type="p", main="Relative Frequency", ylab="SD(frequency) / frequency", xlab="Word", pch=".")
+plot(x, sqrt((v * (1 - v)) / total) / v, type="p", main="Relative Standard Deviation", ylab="SD(frequency) / frequency", xlab="Word", pch=".")
 
 plot(x, v, type="p", main="Twitter Word frequency", xlab="Word", ylab="Frequency", pch=20)
 plot(x, log(v), type="p", main="Log Twitter Word frequency", xlab="Word", ylab="Log(Frequency)", pch=20)
