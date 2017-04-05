@@ -1,0 +1,144 @@
+---
+title: "MasterVis"
+output: html_document
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(dpi=400, fig.width=10, fig.height=7)
+```
+
+# Word Data
+```{r, dpi=300}
+processed <- read.delim("C:/Users/felis/programming/SuperComputing/WordData/output/NgramsCompiledData.dat", header=FALSE)
+v <- as.vector(processed[["V2"]])
+v <- v[1:(length(v) - 1)]
+x <- 1:length(v)
+plot(x, v, type="b", main="Word frequency", xlab="Word", ylab="Frequency")
+
+nv = log(v)
+
+plot(x, nv, type="b", main="Literature Word frequency", xlab="Word", ylab="log(Frequency)")#, col=rainbow(length(v)))
+```
+```{r, dpi=300}
+processed <- read.delim("C:/Users/felis/programming/SuperComputing/WordData/output/TwitterCompiledData.dat", header=FALSE)
+v <- as.vector(processed[["V2"]])
+v <- v[1:(length(v) - 1)]
+x <- 1:length(v)
+plot(x, v, type="b", main="Word frequency", xlab="Word", ylab="Frequency")
+
+nv = log(v)
+
+plot(x, nv, type="b", main="Twitter Word frequency", xlab="Word", ylab="log(Frequency)")#, col=rainbow(length(v)))
+par(new=TRUE)
+plot(x, nv, type="l", axes = FALSE, bty = "n", xlab = "", ylab = "", col="black")
+```
+```{r}
+par(new=TRUE)
+plot(x, nv, type="l", axes = FALSE, bty = "n", xlab = "", ylab = "", col="black")
+
+testMax = 27 # Can't do more than 29 for some reason... Less in knit
+for(i in seq(3, testMax, 2)){
+  cat("## Degree ", i, "\n")
+  par(mfrow=c(1, 2))
+  plot(x, nv, type="l")
+  r = lm(nv~x + poly(x, degree=i))
+  par(new=T)
+  plot(x[1:length(fitted(r))], fitted(r), type="l", col="red", xlab="", ylab="", axes=F, xlim=range(x), ylim=range(nv))
+  plot(x, resid(r), pch=".")
+}
+```
+
+This shows how the data is exponentially spaced, with just a handful of higher frequency words.
+
+
+As we look at the log graph however, we can see that the curve snakes. This is slightly unexpected as a log plot should be something more along the lines of a straight line or a decreased exponential curve.
+
+```{r, dpi=300}
+v <- as.vector(processed[["V2"]])
+stem(v)
+median(v, na.rm=T)
+mean(v, na.rm=T)
+summary(v, na.rm=T)
+sd(v, na.rm=T)
+IQR(v, na.rm=T)
+boxplot(v, data=x, horizontal=TRUE, xlab="Frequency")
+```
+
+As we can see from this plot, the median and IQR are so low that all we see are the outliers.
+
+```{r}
+boxplot(log(v), data=x, horizontal=TRUE, xlab="log(Frequency)")
+```
+
+The log plot gives another insight into the data.
+
+## Total Counts
+
+```{r}
+totalcounts <- read.csv("C:/Users/Felis/Desktop/programming/SuperComputing/WordData/data/googlebooks-eng-all-totalcounts-20120701.dat", header=FALSE, sep = "\t")
+v1 <- as.vector(totalcounts$V1)
+v2 <- as.vector(totalcounts$V2)
+v3 <- as.vector(totalcounts$V3)
+v4 <- as.vector(totalcounts$V4)
+dev.off() #anti-Par hack
+plot(v1, v4, type="l", col="blue", axes = FALSE, bty = "n", xlab = "", ylab = "")
+par(new=TRUE)
+plot(v1, v3, type="l", col="red", axes = FALSE, bty = "n", xlab = "", ylab = "")
+par(new=TRUE)
+plot(v1, v2, type="l", col="dark green", axes = T, bty = "n", xlab = "Year", ylab = "Occurences")
+axis(side=4)#, at = pretty(range(z)))
+legend("topleft", c("Volumes", "Pages", "NGrams"), lty=1, col=c("blue", "red", "dark green"), bty='n', cex=.75)
+```
+```{r}
+v2 <- log(as.vector(totalcounts$V2))
+v3 <- log(as.vector(totalcounts$V3))
+v4 <- log(as.vector(totalcounts$V4))
+plot(v1, v4, type="l", col="blue", axes = FALSE, bty = "n", xlab = "", ylab = "")
+par(new=TRUE)
+plot(v1, v3, type="l", col="red", axes = FALSE, bty = "n", xlab = "", ylab = "")
+par(new=TRUE)
+plot(v1, v2, type="l", col="dark green", axes = T, bty = "n", xlab = "Year", ylab = "log(Occurences)")
+axis(side=4)#, at = pretty(range(z)))
+legend("topleft", c("Volumes", "Pages", "NGrams"), lty=1, col=c("blue", "red", "dark green"), bty='n', cex=.75)
+
+v8 <- v3 / v4
+plot(v1, v8, type="p", col="black", xlab="year", ylab="Av. log(pages) / log(volumes)")
+```
+
+# Twitter data
+
+## Language Statistics
+
+```{r languageDistrubution}
+library(plotrix)
+twitter.1000.langdata <- read.delim("C:/Users/Felis/Desktop/programming/SuperComputing/WordData/data/twitter-1002-langstats", header=FALSE)
+twitter.1000.langdata <- twitter.1000.langdata[with(twitter.1000.langdata, order(V2)),]
+newLangdata <- twitter.1000.langdata[twitter.1000.langdata$V2 > 0,]
+pie3D(newLangdata$V2, labels=newLangdata$V1, col = rainbow(length(newLangdata$V2)), radius=2, labelcex=0.75)
+```
+
+## Length statistics
+
+```{r}
+twitter.1000.lengthstats <- read.table("C:/Users/Felis/Desktop/programming/SuperComputing/WordData/data/twitter-1002-lengthstats", quote="\"", comment.char="")
+boxplot(twitter.1000.lengthstats$V1, horizontal = T)
+mean(twitter.1000.lengthstats$V1)
+sd(twitter.1000.lengthstats$V1)
+summary(twitter.1000.lengthstats)
+sortdata = twitter.1000.lengthstats[order(twitter.1000.lengthstats$V1),]
+plot(sortdata)
+hist(sortdata, breaks=max(sortdata)/5, main="Tweet lengths distribution", xlab="Tweet length") # x/n where there are n lengths in each barlength
+d <- density(sortdata, bw="SJ", adjust=1.6)
+plot(d, main="Tweet lengths distribution")
+polygon(d, col="lightblue")
+stem(sortdata)
+```
+
+## TODO
+
+- Percent of ngrams that are actually words
+- Ngram analysis (letter frequency, word length, etc)
+- Something regarding _NOUN, _ADJ, and other identifiers
+- Words per sentance, sentances per paragraph, paragrahps per chapter, chapters per volume.
+- Percent of nGrams that have part of speach tagging (% with 1 part of speach, % with 2 parts of speach, % with 3 parts of speach)
+- Beginning or end of sentance

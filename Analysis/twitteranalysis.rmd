@@ -1,0 +1,31 @@
+---
+title: "twitter anal"
+author: "Jeremy Rifkin"
+date: "February 10, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(plotrix)
+twitter.1000.langdata <- read_delim("C:/Users/felis/programming/SuperComputing/WordData/data/twitter-1000-langstats", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
+twitter.1000.langdata <- twitter.1000.langdata[with(twitter.1000.langdata, order(X2)),]
+newLangdata <- twitter.1000.langdata[twitter.1000.langdata$X2 > 0,]
+pie3D(newLangdata$X2, labels=newLangdata$X1, col = rainbow(length(newLangdata$X2)), radius=2, labelcex=0.75)
+
+twitter.1000.langdata <- read_delim("C:/Users/felis/programming/SuperComputing/WordData/data/twitter-1001-langstats", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
+twitter.1000.langdata <- twitter.1000.langdata[with(twitter.1000.langdata, order(X2)),]
+newLangdata <- twitter.1000.langdata[twitter.1000.langdata$X2 > 0,]
+pie3D(newLangdata$X2, labels=newLangdata$X1, col = rainbow(length(newLangdata$X2)), radius=2, labelcex=0.75)
+
+twitter.1000.langdata <- read_delim("C:/Users/felis/programming/SuperComputing/WordData/data/twitter-1002-langstats", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
+twitter.1000.langdata <- twitter.1000.langdata[with(twitter.1000.langdata, order(X2)),]
+newLangdata <- twitter.1000.langdata[twitter.1000.langdata$X2 > 0,]
+pie3D(newLangdata$X2, labels=newLangdata$X1, col = rainbow(length(newLangdata$X2)), radius=2, labelcex=0.75)
+
+```
+

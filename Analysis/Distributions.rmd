@@ -1,0 +1,95 @@
+---
+title: "Word Frequency"
+author: "Jeremy Rifkin"
+date: "April 3, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rows = function(tab) lapply(
+  seq_len(nrow(tab)),
+  function(i) unclass(tab[i,,drop=F])
+)
+```
+
+# Literature
+```{r, dpi=300}
+processed <- read.delim("C:/Users/felis/programming/SuperComputing/WordData/output/NgramsCompiledData.dat", header=FALSE)
+v <- as.vector(processed[["V2"]])
+x <- 1:length(v)
+
+
+plot(x, v, type="p", main="Literature Word frequency", xlab="Word", ylab="Frequency", pch=20)
+
+nv = log(v)
+plot(x, nv, type="p", main="Log Literature Word frequency", xlab="Word", ylab="log(Frequency)", pch=20)#, col=rainbow(length(v)))
+```
+# Literature Error
+```{r, dpi=300}
+processed <- read.delim("C:/Users/felis/programming/SuperComputing/WordData/output/NgramsCompiledData.dat", header=FALSE)
+v <- as.vector(processed[["V2"]])
+counts <- as.vector(processed[["V3"]])
+totals <- as.vector(processed[["V4"]])
+recentfrequencies <- counts / totals
+standarderror <- sqrt((recentfrequencies * (1 - recentfrequencies)) / totals)
+x <- 1:length(v)
+
+# Plot SD(Freq)
+plot(x, standarderror, type="p", main="SD(Literature Word frequency)", xlab="Word", ylab="SD(Frequency)", pch=".")
+
+# log(SD(Freq))
+plot(x, log(standarderror), type="p", main="Log(SD(Literature Word frequency))", xlab="Word", ylab="Log(SD(Frequency))", pch=".")
+par(new=T)
+plot(x, log(v), type="p", xlab="", ylab="", axes=F, pch=".", col="red")
+
+
+plot(x, standarderror / v, type="p", main="Accuracy", xlab="Word", ylab="SD(freq) / freq", pch=".")
+plot(x, standarderror, type="p", main="Recent Standard Deviation in Literature Word frequency", xlab="Word", ylab="SD(freq)", pch=".")
+plot(x, log(standarderror), type="p", main="log Recent Standard Deviation in Literature Word frequency", xlab="Word", ylab="Log(SD(freq))", pch=".")
+par(new=T)
+plot(x, log(v), type="p", xlab="", ylab="", axes=F, pch=".", col="red")
+
+plot(x, v, type="p", main="Recent Standard Error Literature Word frequency", xlab="Word", ylab="Frequency", pch=".")
+par(new=T)
+plot(x, v + (2 * standarderror), type="p", main="Recent Standard Error Literature Word frequency", xlab="Word", ylab="Frequency", pch=".", col="blue")
+par(new=T)
+plot(x, v - (2 * standarderror), type="p", main="Recent Standard Error Literature Word frequency", xlab="Word", ylab="Frequency", pch=".", col="red")
+
+plot(x, v, type="p", main="Literature Word frequency", xlab="Word", ylab="Frequency", pch=20)
+
+nv = log(v)
+plot(x, nv, type="p", main="Log Literature Word frequency", xlab="Word", ylab="log(Frequency)", pch=20)
+```
+
+
+
+
+# Twitter
+```{r, dpi=300}
+processed <- read.delim("C:/Users/felis/programming/SuperComputing/WordData/output/TwitterCompiledData.dat", header=FALSE)
+total <- 7005714
+v <- as.vector(processed[["V2"]])
+count <- as.vector(processed[["V3"]])
+
+x <- 1:length(v)
+plot(x, v, pch=".")
+yl = c(min(v), max(v))
+plot(x, sqrt((v * (1 - v)) / total), type="p", main="Twitter Word Frequency Standard Deviation", xlab="Word", ylab="SD(Frequency)", pch=".")
+par(new=T)
+plot(x, v, type="p", xlab="", ylab="", axes=F, pch=".", col="Blue")
+
+
+plot(x, log(sqrt((v * (1 - v)) / total)), type="p", main="Log(Twitter Word frequency SD)", xlab="Word", ylab="Log(SD(Frequency))", pch=".")
+par(new=T)
+plot(x, log(v), pch=".", axes=F, xlab="", ylab="", col="blue")
+
+plot(x, sqrt((v * (1 - v)) / total) / v, type="p", main="Relative Frequency", ylab="SD(frequency) / frequency", xlab="Word", pch=".")
+
+plot(x, v, type="p", main="Twitter Word frequency", xlab="Word", ylab="Frequency", pch=20)
+plot(x, log(v), type="p", main="Log Twitter Word frequency", xlab="Word", ylab="Log(Frequency)", pch=20)
+```
+```
+nv = log(v)
+plot(x, nv, type="p", main="Log Literature Word frequency", xlab="Word", ylab="log(Frequency)", pch=".")#, col=rainbow(length(v)))
+```
