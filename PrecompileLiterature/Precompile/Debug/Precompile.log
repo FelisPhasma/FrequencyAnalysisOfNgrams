@@ -1,7 +1,0 @@
-﻿  Precompile.cpp
-c:\users\felis\programming\supercomputing\worddata\precompile\precompile\precompile.cpp(172): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\felis\programming\supercomputing\worddata\precompile\precompile\precompile.cpp(173): warning C4244: '=': conversion from 'double' to 'unsigned __int64', possible loss of data
-c:\users\felis\programming\supercomputing\worddata\precompile\precompile\precompile.cpp(182): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
-c:\users\felis\programming\supercomputing\worddata\precompile\precompile\precompile.cpp(185): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Precompile.vcxproj -> C:\Users\felis\programming\SuperComputing\WordData\Precompile\Debug\Precompile.exe
-  Precompile.vcxproj -> C:\Users\felis\programming\SuperComputing\WordData\Precompile\Debug\Precompile.pdb (Full PDB)

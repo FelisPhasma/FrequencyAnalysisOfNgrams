@@ -1,4 +1,0 @@
-﻿  AccumulateDatabase.cpp
-c:\users\felis\programming\supercomputing\worddata\accumulatedatabase\accumulatedatabase\accumulatedatabase.cpp(116): warning C4566: character represented by universal-character-name '\uE032' cannot be represented in the current code page (1252)
-  AccumulateDatabase.vcxproj -> C:\Users\felis\programming\SuperComputing\WordData\AccumulateDatabase\Debug\AccumulateDatabase.exe
-  AccumulateDatabase.vcxproj -> C:\Users\felis\programming\SuperComputing\WordData\AccumulateDatabase\Debug\AccumulateDatabase.pdb (Full PDB)
