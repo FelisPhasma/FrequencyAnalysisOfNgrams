@@ -11,9 +11,9 @@ knitr::opts_chunk$set(dpi=400, fig.width=10, fig.height=7)
 ```{r, dpi=300}
 processed <- read.delim("C:/Users/felis/programming/SuperComputing/WordData/output/NgramsCompiledData.dat", header=FALSE)
 v <- as.vector(processed[["V2"]])
-v <- v[1:(length(v) - 1)]
+v <- v[1:length(v)]
 x <- 1:length(v)
-plot(x, v, type="b", main="Word frequency", xlab="Word", ylab="Frequency")
+plot(x, v, type="b", main="Literature Word frequency", xlab="Word", ylab="Frequency")
 
 nv = log(v)
 
